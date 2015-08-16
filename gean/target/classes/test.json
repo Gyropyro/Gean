@@ -1,0 +1,20 @@
+[
+    {
+        "className": "Player",
+        "description": "A player.",
+        "fields": [
+            {
+                "fieldName": "username",
+                "fieldType": "String"
+            },
+            {
+                "fieldName": "score",
+                "fieldType": "int"
+            },
+            {
+                "fieldName": "last login",
+                "fieldType": "long"
+            }
+        ]
+    }
+]
