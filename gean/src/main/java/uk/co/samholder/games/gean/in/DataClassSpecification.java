@@ -16,6 +16,7 @@ public class DataClassSpecification {
 
     private String className;
     private String description;
+    private String sourcePackage;
 
     public String getDescription() {
         return description;
@@ -40,6 +41,14 @@ public class DataClassSpecification {
 
     public void setClassName(String className) {
         this.className = className;
+    }
+
+    public String getSourcePackage() {
+        return sourcePackage;
+    }
+
+    public void setSourcePackage(String sourcePackage) {
+        this.sourcePackage = sourcePackage;
     }
 
     @Override

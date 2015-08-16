@@ -5,10 +5,6 @@
  */
 package uk.co.samholder.games.gean.dto;
 
-import uk.co.samholder.games.gean.dto.comparison.HashCodeGenerator;
-import uk.co.samholder.games.gean.dto.comparison.EqualsGenerator;
-import uk.co.samholder.games.gean.dto.setget.GetterGenerator;
-import uk.co.samholder.games.gean.dto.setget.SetterGenerator;
 import com.sun.codemodel.JClassAlreadyExistsException;
 import com.sun.codemodel.JCodeModel;
 import com.sun.codemodel.JDefinedClass;
@@ -19,9 +15,13 @@ import java.io.IOException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import uk.co.samholder.games.gean.dto.comparison.EqualsGenerator;
+import uk.co.samholder.games.gean.dto.comparison.HashCodeGenerator;
+import uk.co.samholder.games.gean.dto.setget.GetterGenerator;
+import uk.co.samholder.games.gean.dto.setget.SetterGenerator;
 import uk.co.samholder.games.gean.generation.util.ClassManager;
-import uk.co.samholder.games.gean.in.DataFieldSpecification;
 import uk.co.samholder.games.gean.in.DataClassSpecification;
+import uk.co.samholder.games.gean.in.DataFieldSpecification;
 import uk.co.samholder.games.gean.utils.naming.NameFormat;
 
 /**
@@ -49,7 +49,7 @@ public class DataClassGenerator {
         // Create the class.
         JDefinedClass cls = null;
         try {
-            cls = codeModel._class("uk.co.samholder.generated." + camelCaseClassNameUpper);
+            cls = codeModel._class(classSpec.getSourcePackage() + "." + camelCaseClassNameUpper);
         } catch (JClassAlreadyExistsException ex) {
             Logger.getLogger(DataClassGenerator.class.getName()).log(Level.SEVERE, null, ex);
         }

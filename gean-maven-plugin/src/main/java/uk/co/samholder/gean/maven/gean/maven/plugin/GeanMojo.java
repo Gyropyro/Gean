@@ -29,32 +29,37 @@ import uk.co.samholder.games.gean.Gean;
  *
  *
  */
-@Mojo(name = "gean", defaultPhase = LifecyclePhase.PROCESS_SOURCES)
+@Mojo(name = "gean", defaultPhase = LifecyclePhase.GENERATE_SOURCES)
 public class GeanMojo
         extends AbstractMojo {
 
-    @Parameter(property = "outputDir", defaultValue = "target/generated-sources")
-    private File outDir;
+    @Parameter(defaultValue = "target/generated-sources")
+    private File outputDir;
 
-    @Parameter(property = "inputDir", defaultValue = "src/main/gean")
-    private File inDir;
+    @Parameter(defaultValue = "src/main/gean")
+    private File inputDir;
 
+    @Override
     public void execute()
             throws MojoExecutionException {
-        if (!inDir.exists()) {
+        if (!inputDir.exists()) {
             throw new RuntimeException("input directory not found!");
         }
-        if (!inDir.isDirectory()) {
+        if (!inputDir.isDirectory()) {
             throw new RuntimeException("inputDir is not a directory!");
         }
-        List<File> inFiles = FileUtil.getDirectoryFilesRecursive(inDir);
+        System.out.println("Attempting to generate gean sources.");
+        System.out.println("Using input directory: " + inputDir.getPath());
+        System.out.println("Using output directory: " + outputDir.getPath());
+        List<File> inFiles = FileUtil.getDirectoryFilesRecursive(inputDir);
 
         Gean gean = new Gean();
         try {
-            gean.processFiles(inFiles, outDir);
+            gean.processFiles(inFiles, outputDir);
         } catch (IOException ex) {
             throw new RuntimeException("Input/output error occured!", ex);
         }
+        System.out.println("Finished generating gean sources.");
     }
 
 }
