@@ -1,3 +1,2 @@
-/gean/target/
-/gean-maven-plugin/target/
-/gean/target/gean-1.0-SNAPSHOT.jar
+gean/target/**
+gean-maven-plugin/target/**
