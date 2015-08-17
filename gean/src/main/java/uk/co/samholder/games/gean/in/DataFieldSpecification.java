@@ -5,11 +5,20 @@
  */
 package uk.co.samholder.games.gean.in;
 
+import java.util.Map;
+
 /**
  *
  * @author sam
  */
 public class DataFieldSpecification {
+
+    public static DataFieldSpecification fromMap(Map obj) {
+        DataFieldSpecification field = new DataFieldSpecification();
+        field.setFieldName(obj.get("fieldName").toString());
+        field.setFieldType(obj.get("fieldType").toString());
+        return field;
+    }
 
     private String fieldName;
     private String fieldType;

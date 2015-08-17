@@ -5,6 +5,9 @@
  */
 package uk.co.samholder.games.gean.in;
 
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
@@ -14,9 +17,31 @@ import java.util.Set;
  */
 public class DataClassSpecification {
 
+    static DataClassSpecification fromMap(Map map) {
+        DataClassSpecification spec = new DataClassSpecification();
+        spec.setClassName(map.get("className").toString());
+        if (map.containsKey("description")) {
+            spec.setDescription(map.get("description").toString());
+        }
+        if (map.containsKey("sourcePackage")) {
+            spec.setSourcePackage(map.get("sourcePackage").toString());
+        }
+        // Add fields.
+        spec.setFields(new HashSet<>());
+        if (map.containsKey("fields")) {
+            List<Map> list = (List<Map>) map.get("fields");
+            for (Map obj : list) {
+                DataFieldSpecification field = DataFieldSpecification.fromMap(obj);
+                spec.getFields().add(field);
+            }
+        }
+        return spec;
+    }
+
     private String className;
     private String description;
     private String sourcePackage;
+    private Set<DataFieldSpecification> fields;
 
     public String getDescription() {
         return description;
@@ -25,7 +50,6 @@ public class DataClassSpecification {
     public void setDescription(String description) {
         this.description = description;
     }
-    private Set<DataFieldSpecification> fields;
 
     public Set<DataFieldSpecification> getFields() {
         return fields;
