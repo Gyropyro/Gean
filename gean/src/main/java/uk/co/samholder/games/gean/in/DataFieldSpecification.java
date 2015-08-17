@@ -5,7 +5,9 @@
  */
 package uk.co.samholder.games.gean.in;
 
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 /**
  *
@@ -13,15 +15,41 @@ import java.util.Map;
  */
 public class DataFieldSpecification {
 
-    public static DataFieldSpecification fromMap(Map obj) {
+    private static final String[] nonFlagFields = {"fieldName", "fieldType"};
+
+    public static DataFieldSpecification fromMap(Map<String, String> obj) {
+        // Read the required fields.
         DataFieldSpecification field = new DataFieldSpecification();
         field.setFieldName(obj.get("fieldName").toString());
         field.setFieldType(obj.get("fieldType").toString());
+        // Read the flags.
+        Set<String> flags = new HashSet<>();
+        for (String key : obj.keySet()) {
+            boolean flag = true;
+            for (String property : nonFlagFields) {
+                if (key.equals(property)) {
+                    flag = false;
+                }
+            }
+            if (flag) {
+                flags.add(key);
+            }
+        }
+        field.setFlags(flags);
         return field;
     }
 
     private String fieldName;
     private String fieldType;
+    private Set<String> flags;
+
+    public Set<String> getFlags() {
+        return flags;
+    }
+
+    public void setFlags(Set<String> flags) {
+        this.flags = flags;
+    }
 
     public String getFieldType() {
         return fieldType;
