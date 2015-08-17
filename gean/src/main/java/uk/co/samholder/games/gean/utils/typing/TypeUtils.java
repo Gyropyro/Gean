@@ -32,4 +32,25 @@ public class TypeUtils {
         return null;
     }
 
+    public static Class<?> getObjectType(String typeString) {
+        switch (typeString.toLowerCase()) {
+            case "boolean":
+            case "bool":
+                return Boolean.class;
+            case "byte":
+                return Byte.class;
+            case "short":
+                return Short.class;
+            case "int":
+            case "integer":
+                return Integer.class;
+            case "long":
+                return Long.class;
+            case "string":
+            case "str":
+                return String.class;
+        }
+        return null;
+    }
+
 }

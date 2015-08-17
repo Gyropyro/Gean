@@ -59,14 +59,14 @@ public class DataClassGenerator {
         // Create a method.
         for (DataFieldSpecification fieldSpec : classSpec.getFields()) {
             // Generate the field.
-            FieldGenerator fieldGenerator = new FieldGenerator(fieldSpec);
+            FieldGenerator fieldGenerator = new FieldGenerator(fieldSpec, codeModel);
             fieldGenerator.generate(cls);
             JFieldVar fieldVar = fieldGenerator.getFieldVar();
             // Generate the setters method.
-            SetterGenerator setterGenerator = new SetterGenerator(classSpec, fieldSpec, fieldVar);
+            SetterGenerator setterGenerator = new SetterGenerator(classSpec, fieldSpec, fieldVar, codeModel);
             setterGenerator.generate(cls);
             // Generate the getter method.
-            GetterGenerator getterGenerator = new GetterGenerator(classSpec, fieldSpec, fieldVar);
+            GetterGenerator getterGenerator = new GetterGenerator(classSpec, fieldSpec, fieldVar, codeModel);
             getterGenerator.generate(cls);
 
         }
