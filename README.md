@@ -24,6 +24,78 @@ fields:
 The above is an example of a class specification. Classes automatically generate fully documented setters and getters for their fields.
 Processing this will lead to the generation of a java class:
 
+```
+
+package uk.co.samholder.test;
+
+import java.util.Objects;
+
+
+/**
+ * A player.
+ *
+ */
+public class Player {
+
+    private int score;
+    private String username;
+    private long lastLogin;
+
+    /**
+     * Sets the Player's score.
+     *
+     * @param score
+     *     the score.
+     */
+    public void setScore(int score) {
+        this.score = score;
+    }
+
+    /**
+     * Gets the Player's score.
+     *
+     * @return
+     *     score.
+     */
+    public int getScore() {
+        return score;
+    }
+
+    ...
+
+    @Override
+    public boolean equals(Object object) {
+        if (object == null) {
+            return false;
+        }
+        if (getClass()!= object.getClass()) {
+            return false;
+        }
+        Player other = ((Player) object);
+        if (this.score!= other.score) {
+            return false;
+        }
+        if (!Objects.equals(this.username, other.username)) {
+            return false;
+        }
+        if (this.lastLogin!= other.lastLogin) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = ((79 *hash)+ Objects.hashCode(this.score));
+        hash = ((79 *hash)+ Objects.hashCode(this.username));
+        hash = ((79 *hash)+ Objects.hashCode(this.lastLogin));
+        return hash;
+    }
+
+}
+
+```
 ======
 
 # Future Features
