@@ -103,7 +103,7 @@ public class Player {
 
 ## Basic
 - [x] Equals and Hashcode generation (Still needs integration into the specifications)
-- [ ] Add support for lists.
+- [x] Add support for lists.
 - [ ] Allow a Gean class field to be typed with another Gean class.
 
 ## Advanced

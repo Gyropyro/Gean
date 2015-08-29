@@ -5,10 +5,8 @@
  */
 package uk.co.samholder.games.gean.dto.comparison;
 
-import uk.co.samholder.games.gean.generation.ClassFeatureGenerator;
 import com.sun.codemodel.JBlock;
 import com.sun.codemodel.JClass;
-import com.sun.codemodel.JCodeModel;
 import com.sun.codemodel.JDefinedClass;
 import com.sun.codemodel.JExpr;
 import com.sun.codemodel.JExpression;
@@ -17,12 +15,11 @@ import com.sun.codemodel.JMod;
 import com.sun.codemodel.JType;
 import com.sun.codemodel.JVar;
 import java.util.List;
-import java.util.Objects;
-import uk.co.samholder.games.gean.generation.util.ClassManager;
+import uk.co.samholder.games.gean.GenerationContext;
+import uk.co.samholder.games.gean.generation.ClassFeatureGenerator;
 import uk.co.samholder.games.gean.in.DataClassSpecification;
 import uk.co.samholder.games.gean.in.DataFieldSpecification;
 import uk.co.samholder.games.gean.utils.naming.NameFormat;
-import uk.co.samholder.games.gean.utils.typing.TypeUtils;
 
 /**
  *
@@ -30,24 +27,20 @@ import uk.co.samholder.games.gean.utils.typing.TypeUtils;
  */
 public class HashCodeGenerator implements ClassFeatureGenerator {
 
-    private final JCodeModel codeModel;
     private final DataClassSpecification classSpec;
-    private final ClassManager classManager;
 
-    public HashCodeGenerator(DataClassSpecification classSpec, ClassManager classManager, JCodeModel codeModel) {
+    public HashCodeGenerator(DataClassSpecification classSpec) {
         this.classSpec = classSpec;
-        this.classManager = classManager;
-        this.codeModel = codeModel;
     }
 
     @Override
-    public void generate(JDefinedClass cls) {
+    public void generate(JDefinedClass cls, GenerationContext context) {
         if (classSpec.getFields().isEmpty()) {
             return; // No equals needed.
         }
 
         // Import the objects class, for hash coding.
-        JClass objects = classManager.getClassDirect("java.util.Objects");
+        JClass objects = context.getTypeManager().getClassDirect("java.util.Objects");
 
         // Create the equals method.
         JMethod hashMethod = cls.method(JMod.PUBLIC, int.class, "hashCode");
@@ -55,7 +48,7 @@ public class HashCodeGenerator implements ClassFeatureGenerator {
         JBlock body = hashMethod.body();
 
         // Check if the object is null.
-        JVar hash = body.decl(JType.parse(codeModel, "int"), "hash", JExpr.lit(3));
+        JVar hash = body.decl(JType.parse(context.getCodeModel(), "int"), "hash", JExpr.lit(3));
 
         // Do check for each field.
         for (DataFieldSpecification fieldSpec : classSpec.getFields()) {

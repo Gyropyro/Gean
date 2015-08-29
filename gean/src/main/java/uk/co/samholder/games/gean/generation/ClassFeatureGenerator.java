@@ -6,6 +6,7 @@
 package uk.co.samholder.games.gean.generation;
 
 import com.sun.codemodel.JDefinedClass;
+import uk.co.samholder.games.gean.GenerationContext;
 
 /**
  *
@@ -13,6 +14,6 @@ import com.sun.codemodel.JDefinedClass;
  */
 public interface ClassFeatureGenerator {
 
-    public void generate(JDefinedClass cls);
+    public void generate(JDefinedClass cls, GenerationContext context);
 
 }

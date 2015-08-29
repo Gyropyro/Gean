@@ -5,6 +5,7 @@
  */
 package uk.co.samholder.games.gean;
 
+import com.sun.codemodel.JCodeModel;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -40,11 +41,21 @@ public class Gean {
         SpecificationReaderYAML reader = new SpecificationReaderYAML();
         Specification globalSpecification = reader.read(inputFiles);
 
-        DataClassGenerator classGenerator = new DataClassGenerator(outputDir);
-
+        final JCodeModel codeModel = new JCodeModel();
+        final GenerationContext context = new GenerationContext(codeModel, new GeanTypeManager(codeModel));
+        // Create the class generator.
+        DataClassGenerator classGenerator = new DataClassGenerator();
+        // First pass, generate all type information.
         for (DataClassSpecification spec : globalSpecification.getClassSpecs()) {
-            classGenerator.generate(spec);
+            classGenerator.generateType(spec, context);
         }
+        // Second pass, generate each class.
+        for (DataClassSpecification spec : globalSpecification.getClassSpecs()) {
+            classGenerator.generate(spec, context);
+        }
+        // Create the source.
+        outputDir.mkdirs();
+        codeModel.build(outputDir);
     }
 
 }
