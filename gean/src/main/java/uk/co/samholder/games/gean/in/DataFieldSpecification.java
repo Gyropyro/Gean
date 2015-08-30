@@ -5,21 +5,18 @@
  */
 package uk.co.samholder.games.gean.in;
 
-import com.sun.codemodel.JCodeModel;
 import com.sun.codemodel.JType;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import uk.co.samholder.games.gean.utils.typing.TypeUtils;
+import uk.co.samholder.games.gean.GenerationContext;
 
 /**
  *
  * @author sam
  */
 public class DataFieldSpecification {
-
-    private static final String[] nonFlagFields = {"fieldName", "fieldType"};
 
     public static DataFieldSpecification fromMap(Map obj) {
         // Read the required fields.
@@ -64,19 +61,13 @@ public class DataFieldSpecification {
         this.fieldName = fieldName;
     }
 
-    public JType getType(JCodeModel codeModel) {
-        String typeString = getFieldType();
-        if (getFlags().contains("list")) {
-            Class<?> typeClass = TypeUtils.getObjectType(typeString);
-            return codeModel.ref(List.class).narrow(typeClass);
-        } else {
-            Class<?> typeClass = TypeUtils.getBasicType(typeString);
-            try {
-                return codeModel.parseType(typeClass.getCanonicalName());
-            } catch (ClassNotFoundException ex) {
-                throw new RuntimeException("Unable to find class!", ex);
-            }
+    public JType getType(GenerationContext context) {
+        boolean isList = flags.contains("list");
+        JType type = context.getTypeManager().getType(getFieldType(), isList);
+        if (isList) {
+            return context.getCodeModel().ref(List.class).narrow(type);
         }
+        return type;
     }
 
 }

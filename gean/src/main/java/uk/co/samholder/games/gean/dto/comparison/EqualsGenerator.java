@@ -12,6 +12,7 @@ import com.sun.codemodel.JExpr;
 import com.sun.codemodel.JExpression;
 import com.sun.codemodel.JMethod;
 import com.sun.codemodel.JMod;
+import com.sun.codemodel.JType;
 import com.sun.codemodel.JVar;
 import java.util.List;
 import uk.co.samholder.games.gean.GenerationContext;
@@ -19,7 +20,6 @@ import uk.co.samholder.games.gean.generation.ClassFeatureGenerator;
 import uk.co.samholder.games.gean.in.DataClassSpecification;
 import uk.co.samholder.games.gean.in.DataFieldSpecification;
 import uk.co.samholder.games.gean.utils.naming.NameFormat;
-import uk.co.samholder.games.gean.utils.typing.TypeUtils;
 
 /**
  *
@@ -63,7 +63,7 @@ public class EqualsGenerator implements ClassFeatureGenerator {
             String camelCaseFieldName = NameFormat.camelCase(parts, false);
             // Get the type of the field.
             String typeString = fieldSpec.getFieldType();
-            Class<?> typeClass = TypeUtils.getBasicType(typeString);
+            JType typeClass = fieldSpec.getType(context);
             // Get the two expressions.
             JExpression thisField = JExpr.refthis(camelCaseFieldName);
             JExpression othersField = castOther.ref(camelCaseFieldName);

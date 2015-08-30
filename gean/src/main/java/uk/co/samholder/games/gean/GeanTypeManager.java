@@ -10,6 +10,7 @@ import com.sun.codemodel.JCodeModel;
 import com.sun.codemodel.JType;
 import java.util.HashMap;
 import java.util.Map;
+import uk.co.samholder.games.gean.logging.Logger;
 
 /**
  *
@@ -32,18 +33,24 @@ public class GeanTypeManager {
         customTypeMap.put(typeString, type);
     }
 
-    public JType getType(String typeString, boolean forceObject, boolean list) {
+    public JType getType(String typeString, boolean forceObject) {
         // Check the type cache.
         if (customTypeMap.containsKey(typeString)) {
             return customTypeMap.get(typeString);
         }
         // Try for a basic type.
-        JType basicType = getBasicType(typeString);
-        if (basicType != null) {
-            customTypeMap.put(typeString, basicType);
-            return basicType;
+        if (forceObject) {
+            JType objectType = getObjectType(typeString);
+            if (objectType != null) {
+                return objectType;
+            }
+        } else {
+            JType basicType = getBasicType(typeString);
+            if (basicType != null) {
+                return basicType;
+            }
         }
-        return null;
+        throw new RuntimeException(String.format("Missing type: %s", typeString));
     }
 
     public JType getBasicType(String typeString) {
@@ -107,5 +114,22 @@ public class GeanTypeManager {
             return cls;
         }
         return classCache.get(fullyQualifiedClassName);
+    }
+
+    /**
+     * Outputs a report about the state of the type manager. Typically for
+     * diagnostic and debugging purposes.
+     *
+     * @param out the output stream.
+     */
+    public void outputReport() {
+        Logger.log("Custom class types:");
+        for (Map.Entry<String, JType> entry : customTypeMap.entrySet()) {
+            Logger.log(String.format("\t%s -> %s", entry.getKey(), entry.getValue().fullName()));
+        }
+        Logger.log("Imported classes:");
+        for (JClass cls : classCache.values()) {
+            Logger.log(String.format("\t%s", cls.fullName()));
+        }
     }
 }

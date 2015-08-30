@@ -25,16 +25,20 @@ public class SpecificationReaderYAML {
 
     private void read(File file, Specification specification) throws YamlException, FileNotFoundException {
         final YamlReader reader = new YamlReader(new FileReader(file));
-        Object object = reader.read();
+        Object object;
 
-        if (object instanceof Map) {
-            Map map = (Map) object;
-            if (map.containsKey("className")) {
-                specification.getClassSpecs().add(DataClassSpecification.fromMap(map));
+        while ((object = reader.read()) != null) {
+            if (object instanceof Map) {
+                Map map = (Map) object;
+                if (map.containsKey("className")) {
+                    // Case: a class specification.
+                    specification.getClassSpecs().add(DataClassSpecification.fromMap(map));
+                }
+            } else {
+                // Make it fail?
             }
-        } else {
-            // Make it fail?
         }
+
     }
 
     public Specification read(List<File> files) throws IOException {

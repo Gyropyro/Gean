@@ -40,7 +40,7 @@ public class GetterGenerator implements ClassFeatureGenerator {
         List<String> parts = NameFormat.namesToList(fieldSpec.getFieldName());
         String camelCaseFieldNameUpper = NameFormat.camelCase(parts, true);
         // Get the type.
-        JType type = fieldSpec.getType(context.getCodeModel());
+        JType type = fieldSpec.getType(context);
 
         // Create the getter method.
         JMethod getter = cls.method(JMod.PUBLIC, type, "get" + camelCaseFieldNameUpper);

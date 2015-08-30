@@ -44,7 +44,7 @@ public class SetterGenerator implements ClassFeatureGenerator {
         String camelCaseFieldNameUpper = NameFormat.camelCase(parts, true);
 
         // Get the type.
-        JType type = fieldSpec.getType(context.getCodeModel());
+        JType type = fieldSpec.getType(context);
 
         // Generate the method.
         JMethod setter = cls.method(JMod.PUBLIC, void.class, "set" + camelCaseFieldNameUpper);

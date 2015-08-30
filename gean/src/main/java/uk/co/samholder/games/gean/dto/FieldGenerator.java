@@ -33,7 +33,7 @@ public class FieldGenerator implements ClassFeatureGenerator {
         List<String> parts = NameFormat.namesToList(fieldSpec.getFieldName());
         String camelCaseFieldName = NameFormat.camelCase(parts, false);
         // Get the type.
-        JType type = fieldSpec.getType(context.getCodeModel());
+        JType type = fieldSpec.getType(context);
         fieldVar = cls.field(JMod.PRIVATE, type, camelCaseFieldName);
     }
 
