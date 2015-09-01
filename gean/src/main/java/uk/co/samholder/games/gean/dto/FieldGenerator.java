@@ -12,7 +12,7 @@ import com.sun.codemodel.JType;
 import java.util.List;
 import uk.co.samholder.games.gean.GenerationContext;
 import uk.co.samholder.games.gean.generation.ClassFeatureGenerator;
-import uk.co.samholder.games.gean.in.DataFieldSpecification;
+import uk.co.samholder.games.gean.data.DataFieldSpecification;
 import uk.co.samholder.games.gean.utils.naming.NameFormat;
 
 /**

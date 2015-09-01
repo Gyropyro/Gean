@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package uk.co.samholder.games.gean.in;
+package uk.co.samholder.games.gean.data;
 
 import com.sun.codemodel.JType;
 import java.util.HashSet;
@@ -23,6 +23,9 @@ public class DataFieldSpecification {
         DataFieldSpecification field = new DataFieldSpecification();
         field.setFieldName(obj.get("fieldName").toString());
         field.setFieldType(obj.get("fieldType").toString());
+        if (obj.containsKey("collection")) {
+            field.setCollection(CollectionType.valueOf(obj.get("collection").toString()));
+        }
         // Read the flags.
         if (obj.containsKey("flags")) {
             List<String> list = (List<String>) obj.get("flags");
@@ -35,6 +38,7 @@ public class DataFieldSpecification {
 
     private String fieldName;
     private String fieldType;
+    private CollectionType collection;
     private Set<String> flags;
 
     public Set<String> getFlags() {
@@ -61,11 +65,22 @@ public class DataFieldSpecification {
         this.fieldName = fieldName;
     }
 
+    public CollectionType getCollection() {
+        return collection;
+    }
+
+    public void setCollection(CollectionType collection) {
+        this.collection = collection;
+    }
+
     public JType getType(GenerationContext context) {
-        boolean isList = flags.contains("list");
-        JType type = context.getTypeManager().getType(getFieldType(), isList);
-        if (isList) {
+        boolean forceObject = collection != null;
+        JType type = context.getTypeManager().getType(getFieldType(), forceObject);
+        if (collection == CollectionType.List) {
             return context.getCodeModel().ref(List.class).narrow(type);
+        }
+        if (collection == CollectionType.Set) {
+            return context.getCodeModel().ref(Set.class).narrow(type);
         }
         return type;
     }

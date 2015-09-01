@@ -12,8 +12,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import uk.co.samholder.games.gean.dto.DataClassGenerator;
-import uk.co.samholder.games.gean.in.DataClassSpecification;
-import uk.co.samholder.games.gean.in.Specification;
+import uk.co.samholder.games.gean.data.DataClassSpecification;
+import uk.co.samholder.games.gean.data.Specification;
 import uk.co.samholder.games.gean.in.SpecificationReaderYAML;
 import uk.co.samholder.games.gean.logging.Logger;
 

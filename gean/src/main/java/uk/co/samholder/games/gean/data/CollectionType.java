@@ -3,14 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package uk.co.samholder.games.gean.in;
-
-import java.util.ArrayList;
+package uk.co.samholder.games.gean.data;
 
 /**
  *
  * @author sam
  */
-public class DataClassSpecificationList extends ArrayList<DataClassSpecification> {
+public enum CollectionType {
+
+    List,
+    Set;
 
 }

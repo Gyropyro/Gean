@@ -5,6 +5,8 @@
  */
 package uk.co.samholder.games.gean.in;
 
+import uk.co.samholder.games.gean.data.Specification;
+import uk.co.samholder.games.gean.data.DataClassSpecification;
 import com.esotericsoftware.yamlbeans.YamlException;
 import com.esotericsoftware.yamlbeans.YamlReader;
 import java.io.File;

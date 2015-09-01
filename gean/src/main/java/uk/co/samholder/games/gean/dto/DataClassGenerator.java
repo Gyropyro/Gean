@@ -17,8 +17,8 @@ import uk.co.samholder.games.gean.dto.comparison.EqualsGenerator;
 import uk.co.samholder.games.gean.dto.comparison.HashCodeGenerator;
 import uk.co.samholder.games.gean.dto.setget.GetterGenerator;
 import uk.co.samholder.games.gean.dto.setget.SetterGenerator;
-import uk.co.samholder.games.gean.in.DataClassSpecification;
-import uk.co.samholder.games.gean.in.DataFieldSpecification;
+import uk.co.samholder.games.gean.data.DataClassSpecification;
+import uk.co.samholder.games.gean.data.DataFieldSpecification;
 import uk.co.samholder.games.gean.logging.Logger;
 import uk.co.samholder.games.gean.utils.naming.NameFormat;
 

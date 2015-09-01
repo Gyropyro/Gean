@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package uk.co.samholder.games.gean.in;
+package uk.co.samholder.games.gean.data;
 
 import java.util.HashSet;
 import java.util.List;
@@ -17,7 +17,7 @@ import java.util.Set;
  */
 public class DataClassSpecification {
 
-    static DataClassSpecification fromMap(Map map) {
+    public static DataClassSpecification fromMap(Map map) {
         DataClassSpecification spec = new DataClassSpecification();
         spec.setClassName(map.get("className").toString());
         if (map.containsKey("description")) {
@@ -25,6 +25,11 @@ public class DataClassSpecification {
         }
         if (map.containsKey("sourcePackage")) {
             spec.setSourcePackage(map.get("sourcePackage").toString());
+        }
+        if (map.containsKey("flags")) {
+            Set set = new HashSet();
+            set.addAll((List<String>) map.get("flags"));
+            spec.setFlags(set);
         }
         // Add fields.
         spec.setFields(new HashSet<>());
@@ -42,6 +47,7 @@ public class DataClassSpecification {
     private String description;
     private String sourcePackage;
     private Set<DataFieldSpecification> fields;
+    private Set<String> flags;
 
     public String getDescription() {
         return description;
@@ -73,6 +79,14 @@ public class DataClassSpecification {
 
     public void setSourcePackage(String sourcePackage) {
         this.sourcePackage = sourcePackage;
+    }
+
+    public Set<String> getFlags() {
+        return flags;
+    }
+
+    public void setFlags(Set<String> flags) {
+        this.flags = flags;
     }
 
     @Override

@@ -5,6 +5,7 @@
  */
 package uk.co.samholder.games.gean.in;
 
+import uk.co.samholder.games.gean.data.DataClassSpecificationList;
 import com.google.gson.Gson;
 import java.io.File;
 import java.io.FileNotFoundException;
