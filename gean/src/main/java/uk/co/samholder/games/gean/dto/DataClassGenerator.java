@@ -17,6 +17,7 @@ import uk.co.samholder.games.gean.data.DataClassSpecification;
 import uk.co.samholder.games.gean.data.DataFieldSpecification;
 import uk.co.samholder.games.gean.dto.comparison.EqualsGenerator;
 import uk.co.samholder.games.gean.dto.comparison.HashCodeGenerator;
+import uk.co.samholder.games.gean.dto.factory.BuilderGenerator;
 import uk.co.samholder.games.gean.dto.setget.GetterGenerator;
 import uk.co.samholder.games.gean.dto.setget.SetterGenerator;
 import uk.co.samholder.games.gean.logging.Logger;
@@ -65,6 +66,11 @@ public class DataClassGenerator {
         if (classSpec.getFlags().contains("use constructor")) {
             ConstructorGenerator constructorGenerator = new ConstructorGenerator(classSpec);
             constructorGenerator.generate(cls, context);
+        }
+        // Generate factory.
+        if (classSpec.getFlags().contains("use builder")) {
+            BuilderGenerator builderGenerator = new BuilderGenerator(classSpec);
+            builderGenerator.generate(cls, context);
         }
         // Generate equals method.
         EqualsGenerator equalsGenerator = new EqualsGenerator(classSpec);
