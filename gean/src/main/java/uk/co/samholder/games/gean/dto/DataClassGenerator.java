@@ -13,12 +13,12 @@ import com.sun.codemodel.JType;
 import java.io.IOException;
 import java.util.List;
 import uk.co.samholder.games.gean.GenerationContext;
+import uk.co.samholder.games.gean.data.DataClassSpecification;
+import uk.co.samholder.games.gean.data.DataFieldSpecification;
 import uk.co.samholder.games.gean.dto.comparison.EqualsGenerator;
 import uk.co.samholder.games.gean.dto.comparison.HashCodeGenerator;
 import uk.co.samholder.games.gean.dto.setget.GetterGenerator;
 import uk.co.samholder.games.gean.dto.setget.SetterGenerator;
-import uk.co.samholder.games.gean.data.DataClassSpecification;
-import uk.co.samholder.games.gean.data.DataFieldSpecification;
 import uk.co.samholder.games.gean.logging.Logger;
 import uk.co.samholder.games.gean.utils.naming.NameFormat;
 
@@ -60,7 +60,11 @@ public class DataClassGenerator {
             // Generate the getter method.
             GetterGenerator getterGenerator = new GetterGenerator(classSpec, fieldSpec, fieldVar);
             getterGenerator.generate(cls, context);
-
+        }
+        // Generate constructor.
+        if (classSpec.getFlags().contains("use constructor")) {
+            ConstructorGenerator constructorGenerator = new ConstructorGenerator(classSpec);
+            constructorGenerator.generate(cls, context);
         }
         // Generate equals method.
         EqualsGenerator equalsGenerator = new EqualsGenerator(classSpec);
